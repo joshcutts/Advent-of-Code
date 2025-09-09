@@ -1,13 +1,3 @@
-=begin
-
-12345
-
-expand
-
-find_free_space
-
-=end
-
 def parse_input(file)
   content = File.read(file)
   content
@@ -45,14 +35,6 @@ end
 - swap nil index and back index
 - increment nil index
 - break if back index < nil index
-
-PROBLEM
-EXAMPLE
-DATA STRUCTURE
-ALGORITHM
-CODE
-
-PEDAC
 
 =end
 

@@ -34,11 +34,8 @@ count valid reports
 
 
 check valid report
-
 all increasing
-
 all decreasing
-
 adjecent level check
 
 =end
@@ -48,18 +45,6 @@ def parse_input(file)
   lines.map { |line| line.split(' ').map(&:to_i)}
 end
 
-# p parse_input('./day2_test_input.txt')
-
-# def all_increasing(report)
-#   i = 1
-#   loop do
-#     return false if report[i] < report[i - 1]
-#     i += 1
-#     break if i >= report.size
-#   end
-#   true
-# end
-
 def all_increasing?(report)
   report.each_with_index do |level, i|
     next if i == 0
@@ -67,16 +52,6 @@ def all_increasing?(report)
   end
   true
 end
-
-# def all_decreasing(report)
-#   i = 1
-#   loop do
-#     return false if report[i] > report[i - 1]
-#     i += 1
-#     break if i >= report.size
-#   end
-#   true
-# end
 
 def all_decreasing?(report)
   report.each_with_index do |level, i|
