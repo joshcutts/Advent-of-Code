@@ -17,9 +17,9 @@ def count_any_zero_position_during_rotations(instructions):
         num = num % 100
 
         num = num if direction == "R" else (num * -1)
-        # print(dial)
+
         dial += num
-        # print('before', dial, zero_count, num)
+
         if dial > 100:
             zero_count += 1
             dial = dial % 100
@@ -27,7 +27,7 @@ def count_any_zero_position_during_rotations(instructions):
             zero_count += 1 if num != dial else 0
             dial = 100 + dial
         
-        dial = dial % 100 if dial == 100 else dial
+        dial = 0 if dial == 100 else dial
         zero_count += (dial == 0)
         print(instruction, num, dial, zero_count)
         
@@ -37,5 +37,3 @@ def count_any_zero_position_during_rotations(instructions):
 instructions = parse_input("part1_input.txt")
 # instructions = parse_input("example.txt")
 print(count_any_zero_position_during_rotations(instructions))
-
-# print(53 // 100)
