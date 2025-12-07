@@ -56,24 +56,11 @@ def calculate_total(problems):
 
     return total
 
-# def write_to_txt(arr, filename):
-#     separator = ' '
-#     with open(filename, 'w') as f:
-#         for subarray in arr:
-#             # 1. Join the elements of the subarray into a single string
-#             line = separator.join([str(n) for n in subarray])
-            
-#             # 2. Write the string to the file, followed by a newline character (\n)
-#             f.write(line + '\n')
 
 raw_input = parse_input('example.txt')
 # raw_input = parse_input('puzzle.txt')
 # print(raw_input)
-# write_to_txt([raw_input], 'raw_input_format.txt')
-# print(len(raw_input), len(raw_input[0]), len(raw_input[1]))
 problems = vertical_align_problems(raw_input)
-# write_to_txt(problems, 'vertical_problems.txt')
-# write_to_txt([transform_problem(problem, problem.pop()) for problem in problems], 'final_transformed.txt')
 # print(problems)
 print(calculate_total(problems))
 # print(transform_problem([64, 23, 314], '+'))
