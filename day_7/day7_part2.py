@@ -34,34 +34,15 @@ def find_s(manifold):
         if char == "S":
             return i
 
-def count_splits(manifold, start):
-    splits = 0
-    manifold[1][start] = '|'
-    for row_i, row in enumerate(manifold):
-        if row_i == '0':
-            next
-        for space_i, space in enumerate(row):
-            if manifold[row_i - 1][space_i] == '|' and space == '^':
-                manifold[row_i + 1][space_i - 1] = '|'
-                manifold[row_i + 1][space_i + 1] = '|'
-                splits += 1
-            elif manifold[row_i - 1][space_i] == '|':
-                manifold[row_i][space_i] = '|'
-    
-    return splits
+
 
 
 
 manifold = parse_input('example.txt')
 # manifold = parse_input('puzzle.txt')
-start = find_s(manifold)
 # print(find_s(manifold))
-print(count_splits(manifold, start))
+start = find_s(manifold)
 for m in manifold:
     print("".join(m))
 
 
-"""
-
-1010 - too low
-"""
