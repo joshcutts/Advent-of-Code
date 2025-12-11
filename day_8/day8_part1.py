@@ -25,6 +25,8 @@ Docstring for aoc_2025.day_8.day8_part1
 (box1, box2): dist
 """
 import math
+import itertools
+
 def parse_input(filename):
     with open(filename, "r") as f:
         positions = f.read().splitlines()
@@ -42,23 +44,31 @@ def calculate_distance(coord_one, coord_two):
 
     return math.sqrt(sum)
 
+# def calculate_all_distances(positions):
+#     distances = []
+#     print('started calculating distances')
+#     for box1 in positions:
+#         for box2 in positions:
+#             distance = calculate_distance(box1, box2)
+#             if box1 != box2 and distance not in [dis[0] for dis in distances]:
+#                 distances.append([calculate_distance(box1, box2), (box1, box2)])
+
+#     return sorted(distances, key=lambda x: x[0])
+
 def calculate_all_distances(positions):
     distances = []
 
-    for box1 in positions:
-        for box2 in positions:
-            distance = calculate_distance(box1, box2)
-            if box1 != box2 and distance not in [dis[0] for dis in distances]:
-                distances.append([calculate_distance(box1, box2), (box1, box2)])
+    for box1, box2 in itertools.combinations(positions, 2):
+        distance = calculate_distance(box1, box2)
+        distances.append([distance, (box1, box2)])
 
     return sorted(distances, key=lambda x: x[0])
 
 
-
-def calculate_circuit_size(distances, pair_num):
+def calculate_circuit_size(distances, n):
     circuits = []
-
-    for i in range(pair_num):
+    print('started calculating circuit')
+    for i in range(n):
         coord_pair = distances[i][1]
         box1, box2 = coord_pair
 
@@ -71,33 +81,48 @@ def calculate_circuit_size(distances, pair_num):
             -1
             )
         
-        if index_box1 != -1:
-            circuits[index_box1].append(box2)
-        elif index_box2 != -1:
-            circuits[index_box2].append(box1)
-        else:
+        if index_box1 != -1 and index_box1 == index_box2:
+            pass
+        elif index_box1 != -1 and index_box2 == -1:
+            if box2 not in circuits[index_box1]:
+                circuits[index_box1].append(box2)
+        elif index_box2 != -1 and index_box1 == -1:
+            if box1 not in circuits[index_box2]:
+                circuits[index_box2].append(box1)
+        elif index_box1 == -1 and index_box1 == -1:
             circuits.append([box1, box2])
+        elif index_box1 != -1 and index_box2 != -1 and index_box1 != index_box2:
+            
+            # Determine which index is higher and which is lower
+            # L_idx will be the surviving circuit, H_idx will be the deleted circuit
+            L_idx = min(index_box1, index_box2)
+            H_idx = max(index_box1, index_box2)
+            
+            # 1. Merge the elements from the circuit at H_idx into the circuit at L_idx
+            circuits[L_idx].extend(circuits[H_idx])
+            
+            # 2. Delete the circuit at the higher index first (This is the critical step!)
+            del circuits[H_idx]
+            
+            # 3. Clean up duplicates in the surviving circuit (L_idx)
+            circuits[L_idx] = list(set(circuits[L_idx]))
         
     lengths = [len(circuit) for circuit in sorted(circuits, key=len, reverse=True)]
-    return math.prod(lengths[:2])
+    
+    return math.prod(lengths[:3])
 
     
 
 
-positions = parse_input('example.txt')
-# positions = parse_input('puzzle.txt')
+# positions = parse_input('example.txt')
+positions = parse_input('puzzle.txt')
 distances = calculate_all_distances(positions)
-print(distances)
+# print(distances)
 # sol = calculate_circuit_size(distances, 10)
 sol = calculate_circuit_size(distances, 1000)
 print(sol)
 
-# print(calculate_distance('162,817,812', '425,690,689')) # 316.902
-# print(calculate_circuit_size(positions))
 
-# d = {(1, 2): 111, (2, 3): 222, (3, 4): 333}
-# for element in d:
-#     if 2 in element:
-#         del d[element]
-# print(d)
-
+"""
+552 - too low
+"""
