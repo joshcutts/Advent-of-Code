@@ -184,6 +184,23 @@ def sum_total_button_presses(machines):
 
     return total_button_presses
 
+def most_constrained(difference, buttons):
+    # index that appears in buttons least frequently
+    counts = {}
+    for button in buttons:
+        
+        for b in button:
+            if b in counts:
+                counts[b] += 1
+            else:
+                counts[b] = 1
+
+    min_count = min(counts.values())
+    min_indices = [k for k,v in counts.items() if v == min_count]
+    return min_indices
+
+print(most_constrained([52,67,66,109,49,65,70,66,33,72], [(3,6), (0,1,2,3,4,5,7,9), (0,1,5,6,7,8,9), (1,9), (0,1,3,4,5,6,7), (0,1,2,3,4,5), (1,2,3,4,5,6,7,8), (2,3,5,7,8), (2,3,5,7,9), (0,1,2,3,4,6,9), (4,5,6,7,8), (3,6,7,8,9)]))
+
 raw_machines = parse_input('example.txt')
 # raw_machines = parse_input('puzzle.txt')
 formatted_machines = format_input(raw_machines)
